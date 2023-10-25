@@ -1,8 +1,25 @@
 def encoder(password):
     encoded_password = ""
     for item in password:
-        encoded_password += str(int(item) + 3)
+        # Added a fix for instances where (item + 3) >= 10
+        new_item = int(item) + 3
+        if new_item >= 10:
+            new_item -= 10
+        encoded_password += str(new_item)
+
     return encoded_password
+
+
+# Logan B
+def decoder(e_password):
+    d_password = ""
+    for digit in e_password:
+        new_digit = int(digit) - 3
+        if new_digit < 0:
+            new_digit += 10
+        d_password += str(new_digit)
+
+    return d_password
 
 
 def main():
@@ -16,7 +33,9 @@ def main():
             e_password = encoder(password)
             print("Your password has been encoded and stored")
         elif choice == 2:
-            print(f"The encoded password is {e_password}, and the decoded password is {1}.")
+            d_password = decoder(e_password)
+            print(f"The encoded password is {e_password}, and the decoded password is {d_password}.")
+
 
 if __name__ == "__main__":
     main()
